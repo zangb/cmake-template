@@ -1,0 +1,271 @@
+{
+    "version": 9,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 29
+    },
+    "configurePresets": [
+        {
+            "name": "x64-base",
+            "displayName": "x64 base configuration",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_VERBOSE_MAKEFILE": "OFF",
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchain_x64.cmake",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "ENABLE_UNIT_TESTS": "OFF",
+                "ENABLE_CODE_COVERAGE": "OFF"
+            }
+        },
+        {
+            "name": "x64-debug",
+            "displayName": "x64 debug configuration",
+            "inherits": "x64-base",
+            "binaryDir": "${sourceDir}/build/debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_COMPILE_COMMANDS": "${sourceDir}/build/debug/compile_commands.json"
+            }
+        },
+        {
+            "name": "x64-release",
+            "displayName": "x64 release configuration",
+            "inherits": "x64-base",
+            "binaryDir": "${sourceDir}/build/release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_COMPILE_COMMANDS": "${sourceDir}/build/release/compile_commands.json"
+            }
+        },
+        {
+            "name": "x64-test",
+            "displayName": "x64 test configuration",
+            "inherits": "x64-debug",
+            "binaryDir": "${sourceDir}/build/test",
+            "cacheVariables": {
+                "ENABLE_UNIT_TESTS": "ON",
+                "CMAKE_COMPILE_COMMANDS": "${sourceDir}/build/test/compile_commands.json"
+            }
+        },
+        {
+            "name": "x64-coverage",
+            "displayName": "x64 test configuration with coverage",
+            "inherits": "x64-test",
+            "cacheVariables": {
+                "COVERAGE_DIR": "${sourceDir}/coverage",
+                "HTML_OUTPUT_DIR": "${sourceDir}/coverage/html",
+                "ENABLE_CODE_COVERAGE": "ON"
+            }
+        },
+        {
+            "name": "x64-debug-shared",
+            "displayName": "x64 debug configuration",
+            "inherits": "x64-base",
+            "binaryDir": "${sourceDir}/build/debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_COMPILE_COMMANDS": "${sourceDir}/build/debug/compile_commands.json",
+                "BUILD_SHARED": "ON"
+            }
+        },
+        {
+            "name": "x64-release-shared",
+            "displayName": "x64 release configuration",
+            "inherits": "x64-base",
+            "binaryDir": "${sourceDir}/build/release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_COMPILE_COMMANDS": "${sourceDir}/build/release/compile_commands.json",
+                "BUILD_SHARED": "ON"
+            }
+        },
+        {
+            "name": "x64-test-shared",
+            "displayName": "x64 test configuration",
+            "inherits": "x64-debug",
+            "binaryDir": "${sourceDir}/build/test",
+            "cacheVariables": {
+                "ENABLE_UNIT_TESTS": "ON",
+                "CMAKE_COMPILE_COMMANDS": "${sourceDir}/build/test/compile_commands.json",
+                "BUILD_SHARED": "ON"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "x64-debug",
+            "displayName": "x64 debug build",
+            "configurePreset": "x64-debug"
+        },
+        {
+            "name": "x64-release",
+            "displayName": "x64 release build",
+            "configurePreset": "x64-release"
+        },
+        {
+            "name": "x64-test",
+            "displayName": "x64 test build",
+            "configurePreset": "x64-test"
+        },
+        {
+            "name": "x64-coverage",
+            "displayName": "x64 test build",
+            "configurePreset": "x64-coverage"
+        },
+        {
+            "name": "x64-debug-shared",
+            "displayName": "x64 debug build",
+            "configurePreset": "x64-debug-shared"
+        },
+        {
+            "name": "x64-release-shared",
+            "displayName": "x64 release build",
+            "configurePreset": "x64-release-shared"
+        },
+        {
+            "name": "x64-test-shared",
+            "displayName": "x64 test build",
+            "configurePreset": "x64-test-shared"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "x64-test",
+            "configurePreset": "x64-test",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestAction": "ignore",
+                "stopOnFailure": false
+            }
+        },
+        {
+            "name": "x64-coverage",
+            "configurePreset": "x64-coverage",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestAction": "ignore",
+                "stopOnFailure": false
+            }
+        },
+        {
+            "name": "x64-test-shared",
+            "configurePreset": "x64-test-shared",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestAction": "ignore",
+                "stopOnFailure": false
+            }
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "x64-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "x64-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "x64-debug"
+                }
+            ]
+        },
+        {
+            "name": "x64-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "x64-release"
+                },
+                {
+                    "type": "build",
+                    "name": "x64-release"
+                }
+            ]
+        },
+        {
+            "name": "x64-test",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "x64-test"
+                },
+                {
+                    "type": "build",
+                    "name": "x64-test"
+                },
+                {
+                    "type": "test",
+                    "name": "x64-test"
+                }
+            ]
+        },
+        {
+            "name": "x64-coverage",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "x64-coverage"
+                },
+                {
+                    "type": "build",
+                    "name": "x64-coverage"
+                },
+                {
+                    "type": "test",
+                    "name": "x64-coverage"
+                }
+            ]
+        },
+        {
+            "name": "x64-debug-shared",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "x64-debug-shared"
+                },
+                {
+                    "type": "build",
+                    "name": "x64-debug-shared"
+                }
+            ]
+        },
+        {
+            "name": "x64-release-shared",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "x64-release-shared"
+                },
+                {
+                    "type": "build",
+                    "name": "x64-release-shared"
+                }
+            ]
+        },
+        {
+            "name": "x64-test-shared",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "x64-test-shared"
+                },
+                {
+                    "type": "build",
+                    "name": "x64-test-shared"
+                },
+                {
+                    "type": "test",
+                    "name": "x64-test-shared"
+                }
+            ]
+        }
+    ]
+}
