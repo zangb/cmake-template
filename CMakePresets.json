@@ -65,7 +65,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_COMPILE_COMMANDS": "${sourceDir}/build/debug/compile_commands.json",
-                "BUILD_SHARED": "ON"
+                "BUILD_SHARED_LIBS": "ON"
             }
         },
         {
@@ -76,7 +76,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "CMAKE_COMPILE_COMMANDS": "${sourceDir}/build/release/compile_commands.json",
-                "BUILD_SHARED": "ON"
+                "BUILD_SHARED_LIBS": "ON"
             }
         },
         {
@@ -87,7 +87,7 @@
             "cacheVariables": {
                 "ENABLE_UNIT_TESTS": "ON",
                 "CMAKE_COMPILE_COMMANDS": "${sourceDir}/build/test/compile_commands.json",
-                "BUILD_SHARED": "ON"
+                "BUILD_SHARED_LIBS": "ON"
             }
         }
     ],
