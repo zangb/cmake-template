@@ -9,13 +9,7 @@ option(ENABLE_CODE_COVERAGE "Compile the lib with coverage or not" OFF)
 set(SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/template.cpp")
 
-if(BUILD_SHARED)
-    message(STATUS "Building library ${PROJECT_NAME}: SHARED")
-    add_library(${PROJECT_NAME} SHARED ${SOURCES})
-else()
-    message(STATUS "Building library ${PROJECT_NAME}: STATIC")
-    add_library(${PROJECT_NAME} STATIC ${SOURCES})
-endif(BUILD_SHARED)
+add_library(${PROJECT_NAME} ${SOURCES})
 
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
@@ -47,6 +41,13 @@ if(CMAKE_BUILD_TYPE MATCHES "Debug" AND ${ENABLE_UNIT_TESTS})
     add_subdirectory(external/fakeit)
     add_subdirectory(tests)
 endif()
+
+# Generate documentation
+# Search paths for code directories and other configurations need to be done in
+# the Doxyfile directly
+add_custom_target(doxygen
+    COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMAND doxygen "${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile")
 
 # Adds a symlink to the compilation database of the current build config
 # The symlink is automatically updated if the build config changes.

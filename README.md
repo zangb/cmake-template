@@ -35,4 +35,31 @@ cmake --workflow --preset x64-debug
 cmake --workflow --preset aarch64-debug
 ```
 
+# Building Documentation with Doxygen
+To build the documentation a CMake target `doxygen` is provided, outside of workflows.
+First, configure the project for an architecture of your choice
+or run a workflow as shown above. Then call the below command for the generated
+build directory, e.g. `build/release`.
+```bash
+cmake --build <build_dir> --target doxygen
+```
+The Doxyfile is configured to make doxygen return with a non-zero value if it encounters
+undocumented or wrongly documented code which can be used to fail a step in your
+build pipeline.
+
+To configure the look of your doxygen output or any doxygen settings at all, look
+at the Doxyfile in the `docs/` folder. The output will be generated in
+`docs/doxygen`. Note that relative paths will be resolved against the location
+where doxygen was called from. In this template it is the root folder.
+
+Make sure that any source file / header file you add has a doxygen file description,
+otherwise doxygen will not pick it up in its evaluation. An example is provided below
+(the exact syntax depends on the doxygen comment flavour you prefer):
+```cpp
+/*! \file template.hpp
+ *  \brief The template header
+ *
+ *  Provides the template header
+ */
+```
 
